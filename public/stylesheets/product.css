@@ -74,9 +74,15 @@
   text-overflow: ellipsis;
 }
 
+.product-item-title {
+  font-weight: bolder;
+  font-size: 1.15rem;
+}
+
 .product-item-footer {
   display: flex;
   justify-content: space-around;
+  color: rgb(235, 129, 0);
 }
 
 .product-item-footer a {

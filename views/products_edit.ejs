@@ -1,84 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>node-mongodb</title>
-    <link rel="stylesheet" href="/stylesheets/product_edit.css" />
-  </head>
 
-  <body>
-    <%- include layout %>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>node-mongodb</title>
+  <link rel="stylesheet" href="/stylesheets/product_edit.css" />
+</head>
 
-    <section class="content">
-      <% if(locals.errors) { %>
-      <div class="error-validation-msg">
-        <ul>
-          <% Object.values(errors).forEach(function(err) { %>
-          <li><%= err.msg %></li>
-          <% }) %>
-        </ul>
-      </div>
-      <% } %>
+<body>
+  <%- include layout %>
 
-      <div class="form-add-product">
-        <p>แก้ไขข้อมูลสินค้า</p>
-        <div class="form-edit-container">
-          <div class="left-side">
-            <div class="product-image">
-              <img src="/images/products/<%= product.image%>" alt="" />
-            </div>
-          </div>
-          <div class="right-side">
-            <form
-              action="/manage/edit"
-              method="post"
-              enctype="multipart/form-data"
-            >
-              <div class="productName">
-                <label for="productname">ชื่อสินค้า</label>
-                <input
-                  type="text"
-                  max="255"
-                  id="productname"
-                  name="productname"
-                  value="<%= product.name%>"
-                />
-              </div>
-              <div class="productDetail">
-                <label for="productdetail">รายละเอียดสินค้า</label>
-                <textarea
-                  type="text"
-                  max="255"
-                  id="productdetail"
-                  name="productdetail"
-                >
-<%= product.detail%>
-</textarea
-                >
-              </div>
-              <div class="productImage">
-                <label for="productimage">เพิ่มรูปภาพใหม่</label>
-                <input type="file" id="productimage" name="productimage" />
-              </div>
-              <div class="productPrice">
-                <Label for="productprice">ราคาสินค้า</Label>
-                <input
-                  type="number"
-                  min="0"
-                  id="productprice"
-                  name="productprice"
-                  value="<%= product.price%>"
-                />
-              </div>
-              <div class="form-add-product-btn">
-                <button type="submit">บันทึกข้อมูล</button>
-              </div>
-            </form>
+  <section class="content">
+    <% if(locals.errors) { %>
+    <div class="error-validation-msg">
+      <ul>
+        <% Object.values(errors).forEach(function(err) { %>
+        <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <% } %>
+
+    <div class="form-add-product">
+      <p>แก้ไขข้อมูลสินค้า</p>
+      <div class="form-edit-container">
+        <div class="left-side">
+          <div class="product-image">
+            <img src="/images/products/<%= product.image%>" alt="" />
           </div>
         </div>
+        <div class="right-side">
+          <form action="/manage/update" method="post" enctype="multipart/form-data">
+            <input type="text" name="id" value="<%= product._id%>" hidden>
+            <div class="productName">
+              <label for="productname">ชื่อสินค้า</label>
+              <input type="text" max="255" id="productname" name="productname" value="<%= product.name%>" />
+            </div>
+            <div class="productDetail">
+              <label for="productdetail">รายละเอียดสินค้า</label>
+              <textarea type="text" max="255" id="productdetail" name="productdetail"><%= product.detail%></textarea>
+            </div>
+            <div class="productImage">
+              <label for="productimage">เพิ่มรูปภาพใหม่</label>
+              <input type="file" id="productimage" name="productimage" />
+            </div>
+            <div class="productPrice">
+              <Label for="productprice">ราคาสินค้า</Label>
+              <input type="number" min="0" id="productprice" name="productprice" value="<%= product.price%>" />
+            </div>
+            <div class="form-add-product-btn">
+              <button type="submit">อัปเดทข้อมูล</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </section>
-  </body>
+    </div>
+  </section>
+</body>
+
 </html>

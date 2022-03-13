@@ -2,66 +2,64 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>node-mongodb</title>
-    <link rel="stylesheet" href="/stylesheets/manage.css" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>node-mongodb</title>
+  <link rel="stylesheet" href="/stylesheets/manage.css" />
 </head>
 
 <body>
-    <%- include layout %>
-        <section class="content">
-            <% if(typeof Status=="string" && Status.length> 0) { %>
-                <div class="status-messages">
-                    <p>
-                        <%= Status %>
-                    </p>
-                </div>
-                <% } %>
-                    <div class="header">
-                        <h4>จัดการข้อมูลสินค้า</h4>
-                        <div class="add-product">
-                            <p>รายการสินค้า</p>
-                            <a href="/products/add">+เพิ่มสินค้า</a>
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <tr>
-                                <th>ชื่อสินค้า</th>
-                                <th>ราคา (บาท)</th>
-                                <th>รายละเอียด</th>
-                                <th>ลบ</th>
-                                <th>แก้ไข</th>
-                            </tr>
+  <%- include layout %>
+  <section class="content">
+    <% if(typeof Status=="string" && Status.length> 0) { %>
+    <div class="status-messages">
+      <p>
+        <%= Status %>
+      </p>
+    </div>
+    <% } %>
+    <div class="header">
+      <h4>จัดการข้อมูลสินค้า</h4>
+      <div class="add-product">
+        <p>รายการสินค้า</p>
+        <a href="/manage/add">+เพิ่มสินค้า</a>
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>ชื่อสินค้า</th>
+          <th>ราคา (บาท)</th>
+          <th>รายละเอียด</th>
+          <th>ลบ</th>
+          <th>แก้ไข</th>
+        </tr>
 
-                            <% for(let i=0; i<products.length; i++){ %>
+        <% for(let i=0; i<products.length; i++){ %>
 
-                                <tr>
-                                    <td>
-                                        <p><%= products[i].name %></p>
-                                    </td>
-                                    <td>
-                                        <p><%= products[i].price %></p>
-                                    </td>
-                                    <td>
-                                        <p><%= products[i].detail %></p>
-                                    </td>
-                                    <td>
-                                        <a class="btn-delete" href="/manage/delete?id=<%= products[i]._id %>&image=<%= products[i].image %>"
-                                                onclick="return confirm('ต้องการลบข้อมูล?')">ลบ</a>
-                                    </td>
-                                    <td>
-                                        <a class="btn-edit" href="/manage/edit?id=<%= products[i]._id %>"
-                                                onclick="return confirm('ต้องการแก้ไขข้อมูล?')">แก้ไข</a>
-                                    </td>
-                                </tr>
-                                <% } %>
+        <tr>
+          <td>
+            <p><%= products[i].name %></p>
+          </td>
+          <td>
+            <p><%= products[i].price %></p>
+          </td>
+          <td>
+            <p><%= products[i].detail %></p>
+          </td>
+          <td>
+            <a class="btn-delete" href="/manage/delete?id=<%= products[i]._id %>&image=<%= products[i].image %>" onclick="return confirm('ต้องการลบข้อมูล?')">ลบ</a>
+          </td>
+          <td>
+            <a class="btn-edit" href="/manage/edit?id=<%= products[i]._id %>" onclick="return confirm('ต้องการแก้ไขข้อมูล?')">แก้ไข</a>
+          </td>
+        </tr>
+        <% } %>
 
-                        </table>
-                    </div>
-        </section>
+      </table>
+    </div>
+  </section>
 </body>
 
 </html>
