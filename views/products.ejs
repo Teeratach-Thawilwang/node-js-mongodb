@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>node-mongodb</title>
+    <link rel="stylesheet" href="/stylesheets/product.css" />
+  </head>
+
+  <body>
+    <%- include layout %>
+
+    <section class="content">
+      <% if(typeof Status == "string" && Status.length > 0)
+      { %>
+      <div class="status-messages">
+        <p><%= Status %></p>
+      </div>
+      <% } %>
+
+      <div class="product-container">
+        <% for(let i=0; i<products.length; i++) { %>
+        <div class="product-item">
+          <div class="product-item-image">
+            <img src="/images/products/<%= products[i].image %>"/>
+        </div>
+          <div class="product-item-title">
+            <p><%= products[i].name %></p>
+          </div>
+          <div class="product-item-detail">
+            <p><%= products[i].detail %></p>
+          </div>
+          <div class="product-item-footer">
+            <p>ราคา <%= products[i].price %> บาท</p>
+          </div>
+        </div>
+        <% } %>
+        
+      </div>
+    </section>
+  </body>
+</html>
