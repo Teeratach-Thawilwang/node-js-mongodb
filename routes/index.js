@@ -32,7 +32,13 @@ router.post('/login', [
     const timeExpire = 20 * 60 * 1000;  // 20 minutes
 
     if (username === 'admin' && password === '1234') {
-      // create cookie
+      // create session. this data will show on server side.
+      req.session.username = username
+      req.session.password = password
+      req.session.login = true
+      req.session.cookie.maxAge = timeExpire
+
+      // create cookie. this data will show on client side.
       res.cookie('username', username, { maxAge: timeExpire })
       res.cookie('password', password, { maxAge: timeExpire })
       res.cookie('login', true, { maxAge: timeExpire })
@@ -48,10 +54,16 @@ router.post('/login', [
 })
 
 router.get('/logout', (req, res) => {
+  // clear cookie when user logout
   res.clearCookie('username')
   res.clearCookie('password')
   res.clearCookie('login')
-  res.redirect('products');
+
+
+  // clear session when user logout
+  req.session.destroy(() => {
+    res.redirect('products');
+  })
 })
 
 module.exports = router;

@@ -29,7 +29,7 @@ const { check, validationResult } = require('express-validator')
 /* GET users listing. */
 router.get('/', function (req, res) {
     var msg = req.query.Status
-    if (req.cookies.login) {
+    if (req.session.login) {
         Product.find().exec((err, doc) => {
             res.render('manage', { Status: msg, products: doc });
         })
@@ -39,7 +39,7 @@ router.get('/', function (req, res) {
 })
 
 router.get('/add', function (req, res, next) {
-    if (req.cookies.login) {
+    if (req.session.login) {
         res.render('products_add');
     } else {
         res.render('login')
@@ -58,7 +58,7 @@ router.post('/add', upload.single("productimage"), [
         // if valadation is false, send error message
         res.render('products_add', { errors: errMsg })
     } else {
-        if (req.cookies.login) {
+        if (req.session.login) {
             // if not, insert to db
             var imgPath = ''
             if (typeof req.file !== 'undefined') {
@@ -84,7 +84,7 @@ router.post('/add', upload.single("productimage"), [
 
 router.get('/delete', function (req, res, next) {
     // console.log(req.query)
-    if (req.cookies.login) {
+    if (req.session.login) {
         Product.findByIdAndDelete(req.query.id, {
             useFindAndModify: false
         }).exec((err) => {
@@ -101,7 +101,7 @@ router.get('/delete', function (req, res, next) {
 
 router.get('/edit', function (req, res) {
     // console.log(req.query)
-    if (req.cookies.login) {
+    if (req.session.login) {
         Product.findById(req.query.id).exec((err, doc) => {
             if (err) console.log(err)
             res.render('products_edit', { product: doc })
@@ -122,7 +122,7 @@ router.post('/update', upload.single("productimage"), [
         // if valadation is false, send error message
         res.render('products_edit', { errors: errMsg })
     } else {
-        if (req.cookies.login) {
+        if (req.session.login) {
             // if not, insert to db
             var imgPath = ''
             if (typeof req.file !== 'undefined') {
