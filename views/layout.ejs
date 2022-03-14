@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>node-mongodb</title>
   <link rel="stylesheet" href="/stylesheets/layout.css" />
+  <script src="javascripts/login.js" defer></script>
 </head>
 
 <body>
@@ -14,11 +15,11 @@
     <ul class="nav-left">
       <li><a href="/">Home</a></li>
       <li><a href="/products">Product</a></li>
-      <li><a href="/manage">Manage</a></li>
+      <li id="manage"><a href="/manage">Manage</a></li>
     </ul>
     <ul class="nav-right">
-      <li><a href="/product-selected-list">ตระกร้าสินค้า</a></li>
-      <li><a href="/Login">Login</a></li>
+      <li id="listBuy"><a href="/product-selected-list">ตระกร้าสินค้า</a></li>
+      <li id="login"><a href="/login">Login</a></li>
     </ul>
   </section>
 </body>

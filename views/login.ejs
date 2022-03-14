@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>node-mongodb</title>
+  <link rel="stylesheet" href="/stylesheets/login.css" />
+</head>
+
+<body>
+  <%- include layout %>
+
+  <section class="content">
+    <% if(locals.errors) { %>
+    <div class="error-validation-msg">
+      <ul>
+        <% Object.values(errors).forEach(function(err) { %>
+        <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <% } %>
+
+    <div class="form-login">
+      <form action="/login" method="post">
+        <div class="head">
+          <Label>Login</Label>
+        </div>
+        <div class="username">
+          <label for="username">username</label>
+          <input type="" max="255" id="username" name="username" />
+        </div>
+        <div class="password">
+          <label for="password">password</label>
+          <input type="password" max="255" id="password" name="password" />
+        </div>
+        <div class="form-login-btn">
+          <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</body>
+
+</html>

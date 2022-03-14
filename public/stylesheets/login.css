@@ -1,0 +1,99 @@
+@import "layout.css";
+
+.form-login {
+  border: 1px solid rgb(201, 201, 201);
+  background-color: #fff;
+  border-radius: 10px;
+  width: 40%;
+  margin: auto;
+  padding: 2rem;
+}
+
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 20px 0px;
+  font-size: 24px;
+}
+
+.username,
+.password {
+  font-size: 16px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+}
+
+.username input,
+.password input {
+  display: block;
+  border: 0.5px solid rgb(117, 117, 117);
+  border-radius: 3px;
+  width: 100%;
+  height: 2rem;
+  font-size: 14px;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.form-login-btn {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.form-login-btn button {
+  color: #fff;
+  background-color: rgb(42, 127, 255);
+  border-radius: 5px;
+  border: none;
+  padding: 3px 10px;
+  font-size: 18px;
+}
+
+.form-login-btn button:hover {
+  background-color: rgb(8, 107, 255);
+}
+
+.error-validation-msg {
+  width: 40%;
+  margin: auto;
+  padding: 0.5rem 2rem;
+  border: 1px solid rgb(201, 201, 201);
+  border-radius: 10px;
+  background-color: #fa6767;
+  margin-bottom: 1rem;
+}
+
+.error-validation-msg ul {
+  list-style: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+/* @media screen and (max-width: 900px) {
+  .content {
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+  }
+
+  .error-validation-msg,
+  .form-login {
+    width: 40%;
+  }
+} */
+
+@media screen and (max-width: 650px) {
+  .error-validation-msg,
+  .form-login {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .error-validation-msg,
+  .form-login {
+    width: 60%;
+  }
+}

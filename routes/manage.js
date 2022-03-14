@@ -29,13 +29,21 @@ const { check, validationResult } = require('express-validator')
 /* GET users listing. */
 router.get('/', function (req, res) {
     var msg = req.query.Status
-    Product.find().exec((err, doc) => {
-        res.render('manage', { Status: msg, products: doc });
-    })
+    if (req.cookies.login) {
+        Product.find().exec((err, doc) => {
+            res.render('manage', { Status: msg, products: doc });
+        })
+    } else {
+        res.render('login')
+    }
 })
 
 router.get('/add', function (req, res, next) {
-    res.render('products_add');
+    if (req.cookies.login) {
+        res.render('products_add');
+    } else {
+        res.render('login')
+    }
 });
 
 
@@ -50,45 +58,57 @@ router.post('/add', upload.single("productimage"), [
         // if valadation is false, send error message
         res.render('products_add', { errors: errMsg })
     } else {
-        // if not, insert to db
-        var imgPath = ''
-        if (typeof req.file !== 'undefined') {
-            imgPath = req.file.filename
+        if (req.cookies.login) {
+            // if not, insert to db
+            var imgPath = ''
+            if (typeof req.file !== 'undefined') {
+                imgPath = req.file.filename
+            }
+            // rename image
+            let data = new Product({
+                "name": req.body.productname,
+                "detail": req.body.productdetail,
+                "image": imgPath,
+                "price": req.body.productprice
+            })
+            Product.saveProduct(data, (err) => {
+                console.log(err)
+                res.location('/manage')
+                res.redirect('/manage/?Status=บันทึกข้อมูลสำเร็จ')
+            })
+        } else {
+            res.render('login')
         }
-        // rename image
-        let data = new Product({
-            "name": req.body.productname,
-            "detail": req.body.productdetail,
-            "image": imgPath,
-            "price": req.body.productprice
-        })
-        Product.saveProduct(data, (err) => {
-            console.log(err)
-            res.location('/manage')
-            res.redirect('/manage/?Status=บันทึกข้อมูลสำเร็จ')
-        })
     }
 });
 
 router.get('/delete', function (req, res, next) {
     // console.log(req.query)
-    Product.findByIdAndDelete(req.query.id, {
-        useFindAndModify: false
-    }).exec((err) => {
-        if (err) console.log(err)
-        const filePath = path.join(__dirname, '../public/images/products/' + req.query.image)
-        fs.unlinkSync(filePath);
-        res.location('/manage')
-        res.redirect('/manage/?Status=ลบสินค้าเรียบร้อย')
-    })
+    if (req.cookies.login) {
+        Product.findByIdAndDelete(req.query.id, {
+            useFindAndModify: false
+        }).exec((err) => {
+            if (err) console.log(err)
+            const filePath = path.join(__dirname, '../public/images/products/' + req.query.image)
+            fs.unlinkSync(filePath);
+            res.location('/manage')
+            res.redirect('/manage/?Status=ลบสินค้าเรียบร้อย')
+        })
+    } else {
+        res.render('login')
+    }
 });
 
 router.get('/edit', function (req, res) {
     // console.log(req.query)
-    Product.findById(req.query.id).exec((err, doc) => {
-        if (err) console.log(err)
-        res.render('products_edit', { product: doc })
-    })
+    if (req.cookies.login) {
+        Product.findById(req.query.id).exec((err, doc) => {
+            if (err) console.log(err)
+            res.render('products_edit', { product: doc })
+        })
+    } else {
+        res.render('login')
+    }
 });
 
 router.post('/update', upload.single("productimage"), [
@@ -102,37 +122,41 @@ router.post('/update', upload.single("productimage"), [
         // if valadation is false, send error message
         res.render('products_edit', { errors: errMsg })
     } else {
-        // if not, insert to db
-        var imgPath = ''
-        if (typeof req.file !== 'undefined') {
-            imgPath = req.file.filename
-            // rename image
-            var data = {
-                "name": req.body.productname,
-                "detail": req.body.productdetail,
-                "image": imgPath,
-                "price": req.body.productprice
+        if (req.cookies.login) {
+            // if not, insert to db
+            var imgPath = ''
+            if (typeof req.file !== 'undefined') {
+                imgPath = req.file.filename
+                // rename image
+                var data = {
+                    "name": req.body.productname,
+                    "detail": req.body.productdetail,
+                    "image": imgPath,
+                    "price": req.body.productprice
+                }
+            } else {
+                var data = {
+                    // "_id": req.body.id,
+                    "name": req.body.productname,
+                    "detail": req.body.productdetail,
+                    "price": req.body.productprice
+                }
             }
-        } else {
-            var data = {
-                // "_id": req.body.id,
-                "name": req.body.productname,
-                "detail": req.body.productdetail,
-                "price": req.body.productprice
-            }
-        }
 
-        Product.findByIdAndUpdate(req.body.id, data, {
-            useFindAndModify: false
-        }).exec((err, doc) => {
-            if (err) console.log(err)
-            if (imgPath != '') {
-                const filePath = path.join(__dirname, '../public/images/products/' + doc.image)
-                fs.unlinkSync(filePath);
-            }
-            res.location('/manage')
-            res.redirect('/manage/?Status=แก้ไขข้อมูลสินค้าเรียบร้อย')
-        })
+            Product.findByIdAndUpdate(req.body.id, data, {
+                useFindAndModify: false
+            }).exec((err, doc) => {
+                if (err) console.log(err)
+                if (imgPath != '') {
+                    const filePath = path.join(__dirname, '../public/images/products/' + doc.image)
+                    fs.unlinkSync(filePath);
+                }
+                res.location('/manage')
+                res.redirect('/manage/?Status=แก้ไขข้อมูลสินค้าเรียบร้อย')
+            })
+        } else {
+            res.render('login')
+        }
     }
 });
 
